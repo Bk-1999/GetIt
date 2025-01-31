@@ -1,30 +1,34 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Home from "./Home";
-import Products from "./Products";
-import Cart from "./Cart";
-import Login from "./Login";
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import axios from 'axios';
+import AddProduct from './components/AddProduct';
+import ProductList from './components/ProductList';
+import Header from './components/Header';
+import Login from './components/Login';
+import Register from './components/Register';
+import Cart from './components/Cart';
 
 function App() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/products')
+      .then((response) => setProducts(response.data))
+      .catch((error) => console.error('Error fetching products:', error));
+  }, []);
+
   return (
     <Router>
-      <nav className="navbar">
-        <h2>GetIt</h2>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/products">Products</Link></li>
-          <li><Link to="/cart">Cart</Link></li>
-          <li><Link to="/login">Login</Link></li>
-        </ul>
-      </nav>
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
+      <Header />
+      <div>
+        <Routes>
+          <Route path="/" element={<ProductList products={products} />} />
+          <Route path="/add-product" element={<AddProduct />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/cart" element={<Cart />} />
+        </Routes>
+      </div>
     </Router>
   );
 }
