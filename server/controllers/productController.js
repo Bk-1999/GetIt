@@ -13,14 +13,15 @@ const getProducts = async (req, res) => {
 
 // Create a new product
 const createProduct = async (req, res) => {
-  const { name, description, price, image } = req.body;
+  const { name, description, price } = req.body;
+  const image = req.file ? req.file.path : null;  // Store the image path if an image is uploaded
 
   if (!name || !price) {
     return res.status(400).json({ message: 'Name and price are required fields.' });
   }
 
   try {
-    const newProduct = new Product({ name, description, price, image });
+    const newProduct = new Product({ name, description, price, image });  // Include image path
     const savedProduct = await newProduct.save();
     res.status(201).json(savedProduct);
   } catch (err) {

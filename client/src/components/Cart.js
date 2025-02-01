@@ -1,12 +1,12 @@
 import React from 'react';
 
-function Cart() {
+const Cart = () => {
   return (
     <div>
-      <h2>Cart</h2>
-      {/* Cart implementation */}
+      <h2>Shopping Cart</h2>
+      <p>Your cart is currently empty.</p>
     </div>
   );
-}
+};
 
 export default Cart;

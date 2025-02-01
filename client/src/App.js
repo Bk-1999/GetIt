@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';  // Ensure you're using Routes here
 import axios from 'axios';
+import Layout from './components/Layout';
 import AddProduct from './components/AddProduct';
 import ProductList from './components/ProductList';
-import Header from './components/Header';
+import ProductDetail from './components/ProductDetail';
 import Login from './components/Login';
 import Register from './components/Register';
 import Cart from './components/Cart';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -19,16 +21,19 @@ function App() {
 
   return (
     <Router>
-      <Header />
-      <div>
+      <Layout>
         <Routes>
+          {/* Public Routes */}
           <Route path="/" element={<ProductList products={products} />} />
-          <Route path="/add-product" element={<AddProduct />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<Cart />} />
+
+          {/* Protected Route */}
+          <Route path="/add-product" element={<PrivateRoute><AddProduct /></PrivateRoute>} />
         </Routes>
-      </div>
+      </Layout>
     </Router>
   );
 }

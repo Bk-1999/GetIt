@@ -1,29 +1,33 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
-function Register() {
-  const [name, setName] = useState('');
+const Register = () => {
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      await axios.post('http://localhost:5000/api/users/register', { name, email, password });
-      alert('Registration successful');
-    } catch (error) {
-      console.error('Error registering:', error);
-    }
+    console.log('Registration attempted with', { username, email, password });
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
-      <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+      <h2>Register</h2>
+      <label>
+        Username:
+        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
+      </label>
+      <label>
+        Email:
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+      </label>
+      <label>
+        Password:
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+      </label>
       <button type="submit">Register</button>
     </form>
   );
-}
+};
 
 export default Register;
