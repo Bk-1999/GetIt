@@ -1,15 +1,17 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom'; // Updated to use Navigate, not Redirect
+import { Navigate } from 'react-router-dom';
 
-const PrivateRoute = ({ children }) => {
-  const user = localStorage.getItem("user"); // Assuming you're checking if a user is logged in
+function PrivateRoute({ children }) {
+  const token = localStorage.getItem('authToken');
 
-  if (!user) {
-    // If no user is logged in, redirect to login page
+  // If no token, redirect to login
+  if (!token) {
+    alert('You need to be logged in to access this page.');
     return <Navigate to="/login" />;
   }
 
-  return children; // If the user is logged in, render the protected route
-};
+  // If token exists, render the protected component
+  return children;
+}
 
 export default PrivateRoute;

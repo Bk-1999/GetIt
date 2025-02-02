@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api';  // Import API instance for Axios
 
 const AddProduct = () => {
   const [name, setName] = useState('');
@@ -10,10 +10,11 @@ const AddProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/products', { name, description, price });
+      // Use api instead of axios
+      await api.post('/products', { name, description, price });
       setMessage('Product added successfully!');
     } catch (error) {
-      setMessage('Failed to add product.');
+      setMessage(error.response?.data?.message || 'Failed to add product.');
     }
   };
 

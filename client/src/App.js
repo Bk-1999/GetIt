@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';  // Ensure you're using Routes here
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import Layout from './components/Layout';
 import AddProduct from './components/AddProduct';
@@ -23,14 +23,11 @@ function App() {
     <Router>
       <Layout>
         <Routes>
-          {/* Public Routes */}
           <Route path="/" element={<ProductList products={products} />} />
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/cart" element={<Cart />} />
-
-          {/* Protected Route */}
           <Route path="/add-product" element={<PrivateRoute><AddProduct /></PrivateRoute>} />
         </Routes>
       </Layout>

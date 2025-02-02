@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import api from '../api';  // Import the API instance
 
-function ProductList({ products }) {
+function ProductList() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    // Fetch products from the API
+    api.get('/products')
+      .then((response) => setProducts(response.data))
+      .catch((error) => console.error('Error fetching products:', error));
+  }, []);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-4">
       {products.length === 0 ? (
