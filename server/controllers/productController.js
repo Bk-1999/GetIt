@@ -13,11 +13,15 @@ const getProducts = async (req, res) => {
 
 // Create a new product
 const createProduct = async (req, res) => {
-  const { name, description, price } = req.body;
+  let { name, description, price } = req.body;
   const image = req.file ? req.file.path : null;  // Store the image path if an image is uploaded
 
-  if (!name || !price) {
-    return res.status(400).json({ message: 'Name and price are required fields.' });
+  // Convert price to a number if it's a string
+  price = parseFloat(price);
+
+  // Validate required fields
+  if (!name || isNaN(price)) {
+    return res.status(400).json({ message: 'Name and a valid price are required fields.' });
   }
 
   try {
@@ -26,8 +30,26 @@ const createProduct = async (req, res) => {
     res.status(201).json(savedProduct);
   } catch (err) {
     console.error('Error creating product:', err);
-    res.status(400).json({ message: 'Unable to create product.' });
+    res.status(500).json({ message: 'Server Error. Unable to create product.' });
   }
 };
 
-module.exports = { getProducts, createProduct };
+// Get a single product by ID
+const getProductById = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    res.status(200).json(product);
+  } catch (err) {
+    console.error('Error fetching product by ID:', err);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+
+module.exports = {
+  getProducts,
+  createProduct,
+  getProductById,
+};

@@ -1,5 +1,5 @@
 const express = require('express');
-const { getProducts, createProduct } = require('../controllers/productController');
+const { getProducts, createProduct, getProductById } = require('../controllers/productController');
 const multer = require('multer');
 const router = express.Router();
 
@@ -21,6 +21,13 @@ const upload = multer({ storage });  // Initialize multer with the storage confi
  * @access  Public
  */
 router.get('/', getProducts);
+
+/**
+ * @route   GET /api/products/:id
+ * @desc    Get a single product by ID
+ * @access  Public
+ */
+router.get('/:id', getProductById);
 
 /**
  * @route   POST /api/products

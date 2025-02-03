@@ -19,14 +19,15 @@ function Login() {
         password,
       });
 
-      // Save the token
+      // Save the token in localStorage with key 'token'
       const token = response.data.token;
-      localStorage.setItem('authToken', token);
+      localStorage.setItem('token', token);
 
       alert('Login successful!');
       navigate('/');  // Redirect to homepage after login
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      console.error('Login error:', err);
+      setError(err.response?.data?.message || 'Login failed. Please try again.');
     }
   };
 
