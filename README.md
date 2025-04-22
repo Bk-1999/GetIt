@@ -1,6 +1,6 @@
 # GetIt – Decentralized Delivery Platform.
 
-A peer-to-peer delivery platform that connects customers with nearby users ("getters") to fulfill orders without traditional delivery agents..
+A peer-to-peer delivery platform that connects customers with nearby users ("getters") to fulfill orders without traditional delivery agents.
 
 ## 🚀 Features
 
